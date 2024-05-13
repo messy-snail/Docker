@@ -12,6 +12,7 @@ libopencv-contrib-dev libeigen3-dev cmake-gui \
 libqt5websockets5-dev openssh-server
 
 # OrbbecSDK 설정 (v.1.8.3)
+WORKDIR /home/
 RUN git clone https://github.com/orbbec/OrbbecSDK.git && \
     cd OrbbecSDK && \
     git checkout v1.8.3 && \
@@ -21,6 +22,27 @@ RUN git clone https://github.com/orbbec/OrbbecSDK.git && \
     make -j$(nproc) && \
     make install && \
     cp -r install/include/libobsensor /usr/local/include/libobsensor
+
+# sophus
+WORKDIR /home/
+RUN git clone https://github.com/strasdat/Sophus.git && \
+    cd Sophus && \
+    mkdir build && \
+    cd build && \
+    cmake -DBUILD_SOPHUS_EXAMPLES=off -DBUILD_SOPHUS_TESTS=off -DSOPHUS_USE_BASIC_LOGGING=on .. && \
+    make -j$(nproc) && \
+    make install
+
+# sick(nanoscan3)
+WORKDIR /home/
+RUN git clone https://github.com/SICKAG/sick_safetyscanners_base.git && \
+    cd sick_safetyscanners_base && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make -j$(nproc) && \
+    make install
+
 
 # SSH 서버 설정
 RUN mkdir /var/run/sshd

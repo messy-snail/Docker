@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  odroid-ubuntu:
+    image: messysnail/odroid-ubuntu
+    container_name: odroid-ubuntu
+    volumes:
+      - /Users/hansolkang/Desktop/odroid_ws:/root/odroid_ws
+    working_dir: /root/odroid_ws
+    ports:
+      - "1992:22"
+    privileged: true
+    stdin_open: true
+    tty: true
